@@ -1,0 +1,31 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Creditos sin pagar</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cedula</th>
+                        <th>Valor</th>
+                        <th>Fecha</th>
+                        <th>Pagar deuda</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prestamo of prestamos">
+                        <td>{{prestamo.usuario.nombre}}</td>
+                        <td>{{prestamo.usuario.cedula}}</td>
+                        <td>{{prestamo.valor | currency:'COP':'symbol-narrow':'4.2-2'}}</td>
+                        <td>{{prestamo.createAt | date:'mediumDate'}}</td>
+                        <td> <button class="btn btn-warning" (click)="pagarDeuda(prestamo)">
+                                <i class="fas fa-dollar-sign"></i>
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

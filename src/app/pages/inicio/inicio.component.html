@@ -1,0 +1,105 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <app-saldo-banco [valorprestadoUsuario]="valorprestadoUsuario"></app-saldo-banco>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Clientes</h6>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Valor</th>
+                                        <th>Pago</th>
+                                        <th>Ver aprobados</th>
+                                        <th>Ver rechazos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cliente of listadoClientes">
+                                        <td>{{cliente.nombre}}</td>
+                                        <td>{{cliente.valorSolicitado | currency:'COP':'symbol-narrow':'4.2-2'}}</td>
+                                        <td>{{cliente.pagoCredito}}</td>
+                                        <td>
+                                            <button class="btn btn-warning"
+                                                (click)="verPrestamos(cliente.id,false);nombreCliente=cliente.nombre">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger"
+                                                (click)="verPrestamos(cliente.id,true);nombreCliente=cliente.nombre">
+                                                <i class="fas fa-search-dollar"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Prestamo</h6>
+                </div>
+                <div class="card-body">
+                    <app-prestamos [usuarios]="listadoClientes" (valorPrestado)="valorPrestado($event)">
+                    </app-prestamos>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="creditosUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Prestamos cliente: <b>{{nombreCliente}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Valor</th>
+                                <th>Pagada</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prestamo of prestamosUsario">
+                                <td>{{prestamo.valor}}</td>
+                                <td>{{prestamo.pagada}}</td>
+                                <td>{{prestamo.createAt | date: 'dd/MM/yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
